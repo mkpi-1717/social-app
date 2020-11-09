@@ -1,41 +1,99 @@
 import React, { Component } from 'react';
-
 import './SignUp.css'
 
+class SignUp extends Component {
+    constructor() {
+        super();
+        this.state = {
+            nameError: "",
+            emailError: "",
+            passwordError: "",
+            password2Error: "",
+        }
+    }
+
+    submitUser = (event) => {
+        event.preventDefault();
+        var validator = require("email-validator");
+
+        if (this.inputName.value.length <= 4) {
+            this.setState({
+                nameError: "Błąd nazwy",
+            });
+        } else {
+            this.setState({
+                nameError: "  ",
+            });
+        }
+
+
+        if (this.inputEmail.value !== 0 ) {   
+            this.setState({
+                emailError: "Błąd adresu email"
+            });
+        } else {
+            this.setState({
+                emailError: " "
+            });
+        }
+
+
+        if (this.inputPassword.value === '' ) {        
+            this.setState({
+                passwordError: "Błąd hasła"
+            });
+        } else {
+            this.setState({
+                passwordError: " "
+            });
+        }
+
+        if (this.inputPassword2.value !== this.inputPassword.value || this.inputPassword2.value === '') {        
+            this.setState({
+                password2Error: "Hasła są różne"
+            });
+        } else {
+            this.setState({
+                password2Error: " "
+            });
+        }
+
+
+        console.log(this.inputName.value, this.inputEmail.value, this.inputPassword.value, this.inputPassword2.value);
+    }
 
 
 
 
-class SignUp extends Component{
     render() {
-        return(
+        return (
             <div className="container">
-            <form id="form" className="form">
-                <h2>Sign Up</h2>
-                <div className="form-control">
-                    <label for="username">Nazwa Użytkownika</label>
-                    <input type="text" id="username" placeholder="Podaj nazwę użytkownika" />
-                    <small>błąd naswy</small>
-                </div>
-                <div className="form-control">
-                    <label for="email">Email</label>
-                    <input type="text" id="email" placeholder="Podaj maila" />
-                    <small>błąd maila</small>
-                </div>
-                <div className="form-control">
-                    <label for="password">Hasło</label>
-                    <input type="password" id="password" placeholder="Podaj hasło" />
-                    <small>błąd hasło</small>
-                </div>
-                <div className="form-control">
-                    <label for="password2">Potwierdź hasło</label>
-                    <input type="password" id="password2" placeholder="Podaj ponownie hasło" />
-                    <small>błąd potwierdzenia hasła</small>
-                </div>
-                <button>Submit</button>
-            </form>
-    
-        </div>
+                <form onSubmit={this.submitUser} id="form" className="form">
+                    <h2>Sign Up</h2>
+                    <div className="form-control">
+                        <label htmlFor="username">Nazwa Użytkownika</label>
+                        <input ref={input => this.inputName = input} type="text" id="username" placeholder="Podaj nazwę użytkownika" />
+                        <small>{this.state.nameError}</small>
+                    </div>
+                    <div className="form-control">
+                        <label htmlFor="email">Email</label>
+                        <input ref={input => this.inputEmail = input} type="text" id="email" placeholder="Podaj maila" />
+                        <small>{this.state.emailError}</small>
+                    </div>
+                    <div className="form-control">
+                        <label htmlFor="password">Hasło</label>
+                        <input ref={input => this.inputPassword = input} type="password" id="password" placeholder="Podaj hasło" />
+                        <small>{this.state.passwordError}</small>
+                    </div>
+                    <div className="form-control">
+                        <label htmlFor="password2">Potwierdź hasło</label>
+                        <input ref={input => this.inputPassword2 = input} type="password" id="password2" placeholder="Podaj ponownie hasło" />
+                        <small>{this.state.password2Error}</small>
+                    </div>
+                    <button>Submit</button>
+                </form>
+
+            </div>
         );
 
     }
