@@ -1,62 +1,30 @@
 import React, { Component } from 'react';
 import './SignUp.css'
 
+
+
 class SignUp extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             nameError: "",
             emailError: "",
             passwordError: "",
             password2Error: "",
         }
+
+        this.mailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     }
 
     submitUser = (event) => {
         event.preventDefault();
-        var validator = require("email-validator");
 
-        if (this.inputName.value.length <= 4) {
-            this.setState({
-                nameError: "Błąd nazwy",
-            });
-        } else {
-            this.setState({
-                nameError: "  ",
-            });
-        }
-
-
-        if (this.inputEmail.value !== 0 ) {   
-            this.setState({
-                emailError: "Błąd adresu email"
-            });
-        } else {
-            this.setState({
-                emailError: " "
-            });
-        }
-
-
-        if (this.inputPassword.value === '' ) {        
-            this.setState({
-                passwordError: "Błąd hasła"
-            });
-        } else {
-            this.setState({
-                passwordError: " "
-            });
-        }
-
-        if (this.inputPassword2.value !== this.inputPassword.value || this.inputPassword2.value === '') {        
-            this.setState({
-                password2Error: "Hasła są różne"
-            });
-        } else {
-            this.setState({
-                password2Error: " "
-            });
-        }
+        this.setState({
+            nameError: (this.inputName.value.length <= 4)?"Błąd nazwy":"",
+            emailError: (!this.mailRegex.test(this.inputEmail.value))?"Błąd adresu email":"",
+            passwordError: (this.inputPassword.value === '' )?"Błąd hasła":"",
+            password2Error: (this.inputPassword2.value !== this.inputPassword.value)?"Hasła są różne":""
+        });
 
 
         console.log(this.inputName.value, this.inputEmail.value, this.inputPassword.value, this.inputPassword2.value);

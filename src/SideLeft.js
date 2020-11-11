@@ -4,6 +4,8 @@ import {
 } from "react-router-dom";
 
 export default function SideLeft() {
+
+  let userIsLogded = false;
   return (
 
     <nav>
@@ -12,10 +14,13 @@ export default function SideLeft() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/login">Login</Link>
+          {!userIsLogded && <Link to="/login">Login</Link>}
         </li>
         <li>
-          <Link to="/signup">SignUp</Link>
+          {!userIsLogded && <Link to="/signup">SignUp</Link>}
+        </li>
+        <li>
+          {userIsLogded && <Link to="/">Logout</Link>}
         </li>
       </ul>
 

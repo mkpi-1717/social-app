@@ -11,7 +11,32 @@ class Login extends Component {
     submitUser = (event) => {
         event.preventDefault();
         
+       let postData = {
+            username: this.inputName.value,
+            password: this.inputPassword.value
+        };
+        
+        let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        };
 
+        const axios = require('axios').default;
+        
+        axios.post(
+                'http://<host>:(<port>)/<path>', 
+                postData, 
+                axiosConfig)
+            .then((res) => {
+                console.log("RESPONSE RECEIVED: ", res);
+            })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+            })
+
+       
         console.log(this.inputName.value,  this.inputPassword.value);
     }
 
